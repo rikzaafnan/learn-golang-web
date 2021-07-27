@@ -1,0 +1,96 @@
+Web ::>
+    - web berjalan di aplikasi yg bernama Web Server, yaitu aplikasi yg digunakan untuk menyimpan dan menyampaikan isi informasi Web
+
+Web Host ::>
+    - Pihak penyedia komputer untuk Web Server biasa disebut Web Host
+
+Domain ::>
+    - Nama domain adalah alamat yg bisa digunakan sebagai alias ke ip address
+
+Web Browser ::>
+    - Web Browser adalah aplikasi yg digunakan untuk mengakses web melalui internet
+
+Go-Lang Web ::>
+    - Go-Lang juga usdah disediakan package untuk membuat Web, bahkan disertakan pula pckage untuk implementasi uni testing untuk Web
+
+    Cara Kerja Go-Lang Web ::>
+        - di dalam golang, sudah tersedia web servernya
+
+    Server ::>
+        - server adalah struct yg terdapat di package net/http yg digunakan sebagai representasi Web Server di Go-Lang
+        - saat menbuat data server, ada beberapa hal yg perlu kita tentukan, seperti host dan juga port dimana web kita berjalan
+        - Setelah membuat Server, kita bisa menjalankan Server tersebut menggunakna function ListenAndServe()
+
+    Handler ::>
+        - Server hanya bertugas sebagai Web Server, sedangkan untuk menerima HTTP Request yg masuk ke Server, butuh yang namanya Handler
+        - Handler di Go-Lang di represenatsikan dalam interface, dimana dalam kontraknya terdapat sebuah function ServeHTTP() yg digunakan sebgai function yg akan di eksekusi ketika meenrima HTTP Request
+        
+        HandlerFunc ::>
+            - salah satu implementasi dari interdave Handler adalah HandlerFunc
+
+ServeMux ::>
+    - Alternative implementasi dari Handler adalah ServeMux
+    - ServeMux adalah implementasi handler yg bisa mendukung multiple endpoint
+
+URL Pattern ::>
+    - URL Pattern dalam ServeMux sederhana, kita tinggal menambahkan string yg ingin kita gunakan sebagai endpoint, tanpa perlu memasukkan domain web kita
+
+Request ::>
+    - request adalah struct yg merepresenatsikan HTTP Request yg dikirim oleh Web Browser
+
+HTTP Test ::>
+    - Go-Lang sudah menyediakan package khusu untuk membuat unit testing terhadap fitur Web yg kita buat
+    - Semuanya ada di dalam package net/http/httptest https://golang.org/pkg/httptest/
+    - degnan mengguakan package tersebut, kita bisa melakukan testing handler web di Go-Lang tanpa harus menjalankan aplikasi web nya
+    = Kita bisa langsung fokus terhadap handler function yg ingin kita test
+
+    htttptest.NewRequest() ::>
+        - NewRequest(methid, url, body) merupakan function yg digunakan untuk memebuat http.Request
+        - kita bisa menentukan method, url dan body yg akan kita kirim sebagai simulasi unit test
+        - selain itu kita juga bisa menambahkan informasi tambahan lainnya pada requesst yg ingin kita kirim seperti header, cookie, dll
+    
+    http.test.NewRecoder() ::> 
+        - http.NewRecoder() merupakan function yg digunkan untuk membuat ResponseRecorder
+        - ResponseRecorder merupakan struct bantuan untuk merekam HTTP response dari hasil testing yg kita lakukan
+
+Query Parameter ::>
+    - query parameter adalah salah satu fitur yg biasa kita gunakan ketika membuat Web
+    - query paramterer ditempatkan pada URL
+    - untuk menambahkan query parameter, kita bisa menggunakan ?nama=value pada URL nya
+
+url.URL ::>
+    - dalam parameter Request, terdapat attribute URL yg berisi data url.URL
+    - dari data URL ini, kita bisa mengambil data query parameter yg dikirim dari client denga nmengguakan method Query() yg akan mengmebalikan map
+
+Multiple Query Parameter ::>
+    - untuk menambahkan query parameter, kita bisa gunakan tanda & lalu diikutin dengan query parameter berikutnya
+
+Header ::>
+    - untuk menangkap request header yg dikirim oleh client, kita bisa mengambil di Request.Header
+    - Header mirip seperti Query Parameter, isinya adalah map[string][]string
+
+Form Post ::>
+    - jika mengguakan POST, maka semua data di form akan dikirim via body HTTP request
+    - di Go-Lang, untuk mengambil data
+
+    Request.PostForm ::>
+        - Semua data form post yg dikirim dari client, secara otomatis akan disimpan dalam attribute Request.PostForm
+        - namnu sebelum kita bisa mengambil data di attribute PostForm, kita wajib memanggil method Request.ParseForm() terlebih dahulu, method ini digunakan untuk melakukan parsing data body apakah bisa di parsing menjadi form datra atau tidak, jika tidak bisa di parsing, maka akan menyebabkan error 
+
+Response Code ::>
+    - Response code merupakan representasi kode response
+
+Cookie ::>
+    - stateless ::>
+        - HTTp merupakan stateless antara client dan server, artinya server tidak akan menyimpan data apapun untuk mengingat setiap request dari client
+
+    cookie ::>
+        - merupakan fitur di HTTP di mana server bisa memberi response cookie (key-value) dan client akan menyimpan cookie tersebut di web browser
+
+    membuat cookie ::>
+        - cookie merupakan data yang dibuat di server dan sengaja agar disimpan di web browser
+        - untuk membaut cookie di server Go-Lang, kita bisa menggunakan function http.SetCookie()
+
+FileServer ::>
+    - Go-Lang memiliki sebuah fitur yg bernama FileServer
+    
